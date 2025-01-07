@@ -136,11 +136,19 @@ async function run() {
     });
 
     // item added related api
-    app.post("/menu", async (req, res) => {
+    app.post("/menu", verifyToken, verifyAdmin, async (req, res) => {
       const menuItem = req.body;
       const result = await menuCollection.insertOne(menuItem);
       res.send(result);
     });
+
+
+    app.delete('/menu/:id',verifyToken,verifyAdmin,async(req,res)=>{
+      const id =req.params.id
+      const query ={_id :new ObjectId(id)}
+      const result =await menuCollection.deleteOne(query)
+      res.send(result)
+    })
 
     // get all reviews
     app.get("/reviews", async (req, res) => {
