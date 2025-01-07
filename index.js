@@ -135,6 +135,13 @@ async function run() {
       res.send(result);
     });
 
+    // item added related api
+    app.post("/menu", async (req, res) => {
+      const menuItem = req.body;
+      const result = await menuCollection.insertOne(menuItem);
+      res.send(result);
+    });
+
     // get all reviews
     app.get("/reviews", async (req, res) => {
       const result = await reviewCollection.find().toArray();
